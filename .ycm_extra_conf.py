@@ -1,8 +1,6 @@
 import os
 import ycm_core
 
-include = 'source'
-
 def Settings(**kwargs):
     return { 'flags': [
         '-x', 'c++',
@@ -10,5 +8,7 @@ def Settings(**kwargs):
         '-Wall',
         '-Wextra'
         '-Werror',
-        '-isystem', include
+        '-isystem', './source',
+        '-isystem', './library/glad/include',
+        '-isystem', './modules/glfw/include',
     ] }

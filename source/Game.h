@@ -1,11 +1,15 @@
+// Copyright (C) 2020 Maxim, 2dev2fun@gmail.com. All rights reserved.
+
 #pragma once
+
+#include "Engine.h"
+#include "Game/State.h"
+
+#include <memory>
 
 namespace engine {
 
-enum class GameState {
-	PLAY,
-	EXIT
-};
+class WindowSystem;
 
 class Game {
 public:
@@ -14,22 +18,29 @@ public:
 
 	void loop();
 
-	void setState(GameState state);
-	GameState getState() const;
+	void setState(game::State state);
+	game::State getState() const;
 
+	WindowSystem* getWindowSystem();
 private:
 	Game(Game const&) = delete;
 	void operator=(Game const&) = delete;
 
-	GameState mState;
+	game::State mState;
+
+	std::unique_ptr<WindowSystem> mWindowSystem;
 };
 
-inline void Game::setState(GameState state) {
+inline void Game::setState(game::State state) {
 	mState = state;
 }
 
-inline GameState Game::getState() const {
+inline game::State Game::getState() const {
 	return mState;
+}
+
+inline WindowSystem* Game::getWindowSystem() {
+	return mWindowSystem.get();
 }
 
 } // namespace engine

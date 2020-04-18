@@ -1,1 +1,3 @@
 -Isource
+-Ilibrary/glad/include
+-Imodules/glfw/include
