@@ -8,12 +8,8 @@
 #include <GLFW/glfw3.h>
 
 namespace engine {
-namespace system {
-namespace input {
 
-using Key = UInt32;
-
-enum {
+enum Key {
 	KEY_A      = GLFW_KEY_A,
 	KEY_B      = GLFW_KEY_B,
 	KEY_C      = GLFW_KEY_C,
@@ -44,6 +40,4 @@ enum {
 	KEY_SIZE
 };
 
-} // namespace input
-} // namespace system
 } // namespace engine

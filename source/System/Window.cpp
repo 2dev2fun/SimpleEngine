@@ -3,13 +3,12 @@
 #include "System/Window.h"
 
 using namespace engine;
-using namespace engine::system::input;
 
 WindowSystem::WindowSystem(Game* game, UInt32 width, UInt32 height)
 		: mGame(game)
 		, mWindow(nullptr)
 		, mWidth(width)
-		, mHeight(height){
+		, mHeight(height) {
 	for (UInt32 key = 0; key < KEY_SIZE; ++key) {
 		mLastFrame.keys   [key] = 0;
 		mCurrentFrame.keys[key] = 0;
@@ -54,6 +53,9 @@ WindowSystem::~WindowSystem() {
 }
 
 void WindowSystem::update() {
+	glfwSwapBuffers(mWindow);
+	glfwPollEvents();
+
 	for (UInt32 key = 0; key < KEY_SIZE; ++key) {
 		mLastFrame.keys[key] = mCurrentFrame.keys[key];
 		mCurrentFrame.keys[key] = glfwGetKey(mWindow, key);
@@ -68,7 +70,15 @@ void WindowSystem::update() {
 	mLastFrame.mousePositionY = mCurrentFrame.mousePositionY;
 
 	glfwGetCursorPos(mWindow, &mCurrentFrame.mousePositionX, &mCurrentFrame.mousePositionY);
+}
 
-	glfwSwapBuffers(mWindow);
-	glfwPollEvents();
+Bool WindowSystem::isKey(Key key, State state) const {
+
+	switch (state) {
+		case STATE_HELD:     return isKeyHeld(key);
+		case STATE_PRESSED:  return isKeyPressed(key);
+		case STATE_RELEASED: return isKeyReleased(key);
+
+		default: ASSERT(0);
+	}
 }

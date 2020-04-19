@@ -5,18 +5,12 @@
 #include "Engine.h"
 
 namespace engine {
-namespace system {
-namespace input {
 
-using State = UInt32;
-
-enum {
+enum State {
 	STATE_NONE,
 	STATE_PRESSED,
 	STATE_RELEASED,
 	STATE_HELD,
 };
 
-} // namespace input
-} // namespace system
 } // namespace engine

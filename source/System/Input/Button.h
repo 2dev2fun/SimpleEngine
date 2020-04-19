@@ -5,17 +5,11 @@
 #include "Engine.h"
 
 namespace engine {
-namespace system {
-namespace input {
 
-using Button = UInt32;
-
-enum {
+enum Button {
 	BUTTON_0,
 	BUTTON_1,
 	BUTTON_SIZE
 };
 
-} // namespace input
-} // namespace system
 } // namespace engine

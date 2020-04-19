@@ -21,13 +21,15 @@ public:
 
 	void update();
 
-	Bool isKeyPressed(system::input::Key key) const;
-	Bool isKeyReleased(system::input::Key key) const;
-	Bool isKeyHeld(system::input::Key key) const;
+	Bool isKey(Key key, State state) const;
 
-	Bool isMouseButtonPressed(system::input::Button button) const;
-	Bool isMouseButtonReleased(system::input::Button button) const;
-	Bool isMouseButtonHeld(system::input::Button button) const;
+	Bool isKeyPressed(Key key) const;
+	Bool isKeyReleased(Key key) const;
+	Bool isKeyHeld(Key key) const;
+
+	Bool isMouseButtonPressed(Button button) const;
+	Bool isMouseButtonReleased(Button button) const;
+	Bool isMouseButtonHeld(Button button) const;
 
 	Float32 getMousePositionX() const;
 	Float32 getMousePositionY() const;
@@ -39,15 +41,14 @@ public:
 	UInt32 getWindowHeight() const;
 private:
 	Game* mGame;
-
 	GLFWwindow* mWindow;
 
 	UInt32 mWidth;
 	UInt32 mHeight;
 
 	struct Frame {
-		UInt8   keys[system::input::KEY_SIZE];
-		UInt8   mouseButtons[system::input::BUTTON_SIZE];
+		UInt8   keys[KEY_SIZE];
+		UInt8   mouseButtons[BUTTON_SIZE];
 		Float64 mousePositionX;
 		Float64 mousePositionY;
 	};
@@ -56,27 +57,27 @@ private:
 	Frame mCurrentFrame;
 };
 
-inline Bool WindowSystem::isKeyPressed(system::input::Key key) const {
+inline Bool WindowSystem::isKeyPressed(Key key) const {
 	return mCurrentFrame.keys[key] && !mLastFrame.keys[key];
 }
 
-inline Bool WindowSystem::isKeyReleased(system::input::Key key) const {
+inline Bool WindowSystem::isKeyReleased(Key key) const {
 	return !mCurrentFrame.keys[key] && mLastFrame.keys[key];
 }
 
-inline Bool WindowSystem::isKeyHeld(system::input::Key key) const {
+inline Bool WindowSystem::isKeyHeld(Key key) const {
 	return mCurrentFrame.keys[key] && mLastFrame.keys[key];
 }
 
-inline Bool WindowSystem::isMouseButtonPressed(system::input::Button button) const {
+inline Bool WindowSystem::isMouseButtonPressed(Button button) const {
 	return mCurrentFrame.mouseButtons[button] && !mLastFrame.mouseButtons[button];
 }
 
-inline Bool WindowSystem::isMouseButtonReleased(system::input::Button button) const {
+inline Bool WindowSystem::isMouseButtonReleased(Button button) const {
 	return !mCurrentFrame.mouseButtons[button] && mLastFrame.mouseButtons[button];
 }
 
-inline Bool WindowSystem::isMouseButtonHeld(system::input::Button button) const {
+inline Bool WindowSystem::isMouseButtonHeld(Button button) const {
 	return mCurrentFrame.mouseButtons[button] && mLastFrame.mouseButtons[button];
 }
 

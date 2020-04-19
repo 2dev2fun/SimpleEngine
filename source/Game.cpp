@@ -1,9 +1,12 @@
 // Copyright (C) 2020 Maxim, 2dev2fun@gmail.com. All rights reserved.
 
+#include "Command/Exit.h"
+#include "Command/Test.h"
 #include "Game.h"
+#include "System/Input.h"
+#include "System/Input/Button.h"
+#include "System/Input/Key.h"
 #include "System/Window.h"
-#include <System/Input/Button.h>
-#include <System/Input/Key.h>
 
 #include <chrono>
 #include <iostream>
@@ -11,10 +14,13 @@
 #include <thread>
 
 using namespace engine;
-using namespace engine::game;
 
-Game::Game() : mState(State::PLAY) {
+Game::Game() : mGameState(GAME_STATE_PLAY) {
+	mInputSystem  = std::make_unique<InputSystem>(this);
 	mWindowSystem = std::make_unique<WindowSystem>(this, 1024, 768);
+
+	mInputSystem->attachCommand(std::make_unique<ExitCommand>(this, KEY_ESCAPE, STATE_RELEASED));
+	mInputSystem->attachCommand(std::make_unique<TestCommand>(this, KEY_T,      STATE_PRESSED));
 }
 
 Game::~Game() {}
@@ -28,7 +34,7 @@ void Game::loop() {
 	auto lag = previousFrame - previousFrame;
 	auto referenceFrame = microseconds(16'672);
 
-	while (mState == State::PLAY) {
+	while (mGameState == GAME_STATE_PLAY) {
 		auto startFrame = high_resolution_clock::now();
 		lag += startFrame - previousFrame;
 		previousFrame = startFrame;
@@ -38,15 +44,12 @@ void Game::loop() {
 		}
 
 		mWindowSystem->update();
+		mInputSystem->update();
 
 		auto endFrame = high_resolution_clock::now();
 		if ((endFrame - startFrame) < referenceFrame) {
 			auto sleepTime = startFrame + referenceFrame - endFrame;
 			sleep_for(sleepTime);
-		}
-
-		if (mWindowSystem->isKeyReleased(system::input::KEY_ESCAPE)) {
-			mState = State::EXIT;
 		}
 
 		//auto frameTime = duration_cast<microseconds>(high_resolution_clock::now() - startFrame).count();

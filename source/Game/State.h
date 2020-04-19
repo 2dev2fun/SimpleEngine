@@ -3,12 +3,10 @@
 #pragma once
 
 namespace engine {
-namespace game {
 
-enum class State {
-	PLAY,
-	EXIT
+enum GameState {
+	GAME_STATE_PLAY,
+	GAME_STATE_EXIT
 };
 
-} // namespace game
 } // namespace engine

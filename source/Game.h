@@ -9,6 +9,7 @@
 
 namespace engine {
 
+class InputSystem;
 class WindowSystem;
 
 class Game {
@@ -18,25 +19,31 @@ public:
 
 	void loop();
 
-	void setState(game::State state);
-	game::State getState() const;
+	void setState(GameState state);
+	GameState getState() const;
 
+	InputSystem* getInputSystem();
 	WindowSystem* getWindowSystem();
 private:
 	Game(Game const&) = delete;
 	void operator=(Game const&) = delete;
 
-	game::State mState;
+	GameState mGameState;
 
+	std::unique_ptr<InputSystem> mInputSystem;
 	std::unique_ptr<WindowSystem> mWindowSystem;
 };
 
-inline void Game::setState(game::State state) {
-	mState = state;
+inline void Game::setState(GameState gameState) {
+	mGameState = gameState;
 }
 
-inline game::State Game::getState() const {
-	return mState;
+inline GameState Game::getState() const {
+	return mGameState;
+}
+
+inline InputSystem* Game::getInputSystem() {
+	return mInputSystem.get();
 }
 
 inline WindowSystem* Game::getWindowSystem() {

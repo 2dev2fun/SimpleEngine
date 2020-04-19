@@ -21,7 +21,11 @@ include_directories(
 	"${MOD_DIR}/glfw/include")
 
 add_library(library
+	"${SRC_DIR}/Command.cpp"
+	"${SRC_DIR}/Command/Exit.cpp"
+	"${SRC_DIR}/Command/Test.cpp"
 	"${SRC_DIR}/Game.cpp"
+	"${SRC_DIR}/System/Input.cpp"
 	"${SRC_DIR}/System/Window.cpp")
 
 target_link_libraries(${PROJECT_NAME} library)
