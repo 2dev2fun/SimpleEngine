@@ -1,3 +1,4 @@
 -Isource
 -Ilibrary/glad/include
+-Ilibrary/catch2/include
 -Imodules/glfw/include

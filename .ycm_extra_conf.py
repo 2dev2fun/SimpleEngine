@@ -10,5 +10,6 @@ def Settings(**kwargs):
         '-Werror',
         '-isystem', './source',
         '-isystem', './library/glad/include',
+        '-isystem', './library/catch2/include',
         '-isystem', './modules/glfw/include',
     ] }

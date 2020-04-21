@@ -1,3 +1,5 @@
+# Copyright (C) 2020 Maxim, 2dev2fun@gmail.com. All rights reserved.
+
 import os
 import subprocess
 import multiprocessing
@@ -13,4 +15,5 @@ if os.name == 'nt':
 
 if os.name == 'posix':
     os.system('cd build && cmake .. && make -j{}'.format(cores))
+    os.system('./build/test/Test')
     os.system('./build/SimpleEngine')

@@ -6,6 +6,8 @@
 #include <cstdint>
 #include <iostream>
 
+#define UNUSED(X) do { (void)(X); } while(0)
+
 #define ASSERT(X) assert(X)
 
 #define LOG_ERROR(X) error(__PRETTY_FUNCTION__, __LINE__, X);
