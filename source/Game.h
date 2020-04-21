@@ -9,9 +9,6 @@
 
 namespace engine {
 
-class InputSystem;
-class WindowSystem;
-
 class Game {
 public:
 	Game();

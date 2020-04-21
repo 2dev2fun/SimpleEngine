@@ -50,7 +50,7 @@ TEST_CASE("Math Matrix3x3 Operator", "[Matrix3x3 Operator]") {
 		REQUIRE(res == ref);
 	}
 
-	SECTION("Matrix3x3<T> operator*(const Matrix3x3<T>& left, const Matrix3x3<T>& right)") {
+	SECTION("Matrix3x3<T> operator*(Matrix3x3<T> const& left, Matrix3x3<T> const& right)") {
 		auto res = A * B;
 		auto ref = Matrix3x3<Float32>(
 				Vector3<Float32>(15, 30, 45),

@@ -7,72 +7,68 @@
 namespace engine {
 
 template<typename T>
-class Vector3 {
+class Vector2 {
 public:
-	Vector3();
-	Vector3(T x, T y, T z);
-	explicit Vector3(T value);
+	Vector2();
+	Vector2(T x, T y);
+	explicit Vector2(T value);
 
 	T& operator[](UInt32 index);
 	T const& operator[](UInt32 index) const;
 
 	template <typename U>
-	Vector3<T>& operator+=(U right);
+	Vector2<T>& operator+=(U right);
 
 	template <typename U>
-	Vector3<T>& operator-=(U right);
+	Vector2<T>& operator-=(U right);
 
 	template <typename U>
-	Vector3<T>& operator*=(U right);
+	Vector2<T>& operator*=(U right);
 
 	T x;
 	T y;
-	T z;
 };
 
 template <typename T>
-Vector3<T>::Vector3() : x(0), y(0), z(0) {}
+Vector2<T>::Vector2() : x(0), y(0) {}
 
 template <typename T>
-Vector3<T>::Vector3(T x, T y, T z) : x(x), y(y), z(z) {}
+Vector2<T>::Vector2(T x, T y) : x(x), y(y) {}
 
 template <typename T>
-Vector3<T>::Vector3(T value) : x(value), y(value), z(value) {}
+Vector2<T>::Vector2(T value) : x(value), y(value) {}
 
 template <typename T>
-T& Vector3<T>::operator[](UInt32 index) {
+T& Vector2<T>::operator[](UInt32 index) {
 	return *(&x + index);
 }
 
 template <typename T>
-T const& Vector3<T>::operator[](UInt32 index) const {
+T const& Vector2<T>::operator[](UInt32 index) const {
 	return *(&x + index);
 }
 
 template <typename T>
 template <typename U>
-Vector3<T>& Vector3<T>::operator+=(U right) {
+Vector2<T>& Vector2<T>::operator+=(U right) {
 	x += right;
 	y += right;
-	z += right;
 	return *this;
 }
 
 template <typename T>
 template <typename U>
-Vector3<T>& Vector3<T>::operator-=(U right) {
+Vector2<T>& Vector2<T>::operator-=(U right) {
 	x -= right;
 	y -= right;
-	z -= right;
 	return *this;
 }
 
 template <typename T>
 template <typename U>
-Vector3<T>& Vector3<T>::operator*=(U right) {
+Vector2<T>& Vector2<T>::operator*=(U right) {
 	x *= right;
 	y *= right;
-	z *= right;
 	return *this;
 }
 

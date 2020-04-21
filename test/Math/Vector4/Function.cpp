@@ -1,7 +1,7 @@
 // Copyright (C) 2020 Maxim, 2dev2fun@gmail.com. All rights reserved.
 
-#include "Math/Vector3/Function.h"
-#include "Math/Vector3/Operator.h"
+#include "Math/Vector4/Function.h"
+#include "Math/Vector4/Operator.h"
 
 #include <catch2/catch.hpp>
 
@@ -9,25 +9,18 @@
 
 using namespace engine;
 
-TEST_CASE("Math Vector3 Function", "[Vector3 Function]") {
-	Vector3<Float32> a(1, 2, 3);
-	Vector3<Float32> b(4, 5, 6);
+TEST_CASE("Math Vector4 Function", "[Vector4 Function]") {
+	Vector4<Float32> a(1, 2, 3, 4);
+	Vector4<Float32> b(5, 6, 7, 8);
 
-	SECTION("Vector3<T> cross(Vector3<T> const& left, Vector3<T> const& right)") {
-		auto res = math::cross(a, b);
-		auto ref = Vector3<Float32>(-3, 6, -3);
-
-		REQUIRE(res == ref);
-	}
-
-	SECTION("T lengthSquared(Vector3<T> const& value)") {
+	SECTION("T lengthSquared(Vector4<T> const& value)") {
 		auto res = math::lengthSquared(a);
-		auto ref = 14;
+		auto ref = 30;
 
 		REQUIRE(res == ref);
 	}
 
-	SECTION("T length(Vector3<T> const& value)") {
+	SECTION("T length(Vector4<T> const& value)") {
 		auto res = math::length(a);
 		auto ref = std::sqrt(math::lengthSquared(a));
 
@@ -37,7 +30,7 @@ TEST_CASE("Math Vector3 Function", "[Vector3 Function]") {
 		REQUIRE(res == ref);
 	}
 
-	SECTION("Vector3<T> normalize(Vector3<T> const& value)") {
+	SECTION("Vector4<T> normalize(Vector4<T> const& value)") {
 		auto res = math::length(math::normalize(a));
 		auto ref = 1.0f;
 

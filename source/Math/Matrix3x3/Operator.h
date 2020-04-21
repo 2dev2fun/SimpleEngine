@@ -38,7 +38,7 @@ Vector3<T> operator*(Matrix3x3<T> const& left, Vector3<T> const& right) {
 }
 
 template <typename T>
-Matrix3x3<T> operator*(const Matrix3x3<T>& left, const Matrix3x3<T>& right) {
+Matrix3x3<T> operator*(Matrix3x3<T> const& left, Matrix3x3<T> const& right) {
 	return Matrix3x3<T>(left * right[0], left * right[1], left * right[2]);
 }
 

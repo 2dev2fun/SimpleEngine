@@ -12,8 +12,6 @@
 
 namespace engine {
 
-class Game;
-
 class WindowSystem {
 public:
 	WindowSystem(Game* game, UInt32 width, UInt32 height);

@@ -10,9 +10,6 @@
 
 namespace engine {
 
-class Command;
-class Game;
-
 class InputSystem {
 public:
 	InputSystem(Game* game);

@@ -2,9 +2,9 @@
 
 #pragma once
 
-namespace engine {
+#include "Engine.h"
 
-class Game;
+namespace engine {
 
 class Command {
 public:

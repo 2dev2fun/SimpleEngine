@@ -54,11 +54,6 @@ Vector3<T> operator+(U left, Vector3<T> const& right) {
 }
 
 template <typename T, typename U>
-Vector3<T> operator-(U left, Vector3<T> const& right) {
-	return Vector3<T>(left - right.x, left - right.y, left - right.z);
-}
-
-template <typename T, typename U>
 Vector3<T> operator*(U left, Vector3<T> const& right) {
 	return Vector3<T>(left * right.x, left * right.y, left * right.z);
 }

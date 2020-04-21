@@ -4,8 +4,6 @@
 
 #include "Math/Matrix3x3.h"
 
-#include <utility>
-
 namespace engine {
 namespace math {
 
