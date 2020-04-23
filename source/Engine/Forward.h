@@ -27,7 +27,16 @@ class Vector4;
 
 class Command;
 class Game;
+
 class InputSystem;
+class RenderSystem;
 class WindowSystem;
+class WorldSystem;
+
+class MeshComponent;
+class Transform3DComponent;
+
+template <typename Component>
+class Table;
 
 } // namespace engine

@@ -13,7 +13,6 @@ namespace engine {
 class InputSystem {
 public:
 	InputSystem(Game* game);
-	~InputSystem();
 
 	void update();
 

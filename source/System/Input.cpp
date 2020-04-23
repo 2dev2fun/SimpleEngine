@@ -4,16 +4,15 @@
 #include "System/Input.h"
 
 #include <algorithm>
-#include <memory>
 
 namespace engine {
 
 InputSystem::InputSystem(Game* game) : mGame(game) {}
 
-InputSystem::~InputSystem() {}
-
 void InputSystem::update() {
-	for (auto& command : mCommands) { command->execute(); }
+	for (auto& command : mCommands) {
+		command->execute();
+	}
 }
 
 void InputSystem::attachCommand(std::shared_ptr<Command> command) {

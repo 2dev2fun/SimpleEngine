@@ -3,9 +3,10 @@
 #pragma once
 
 #include "Engine.h"
-#include "Game/State.h"
+#include "GameState.h"
 
 #include <memory>
+#include <vector>
 
 namespace engine {
 
@@ -19,32 +20,44 @@ public:
 	void setState(GameState state);
 	GameState getState() const;
 
-	InputSystem* getInputSystem();
+	InputSystem*  getInputSystem();
+	RenderSystem* getRenderSystem();
 	WindowSystem* getWindowSystem();
+	WorldSystem*  getWorldSystem();
 private:
 	Game(Game const&) = delete;
 	void operator=(Game const&) = delete;
 
-	GameState mGameState;
+	GameState mState;
 
-	std::unique_ptr<InputSystem> mInputSystem;
+	std::unique_ptr<InputSystem>  mInputSystem;
+	std::unique_ptr<RenderSystem> mRenderSystem;
 	std::unique_ptr<WindowSystem> mWindowSystem;
+	std::unique_ptr<WorldSystem>  mWorldSystem;
 };
 
-inline void Game::setState(GameState gameState) {
-	mGameState = gameState;
+inline void Game::setState(GameState state) {
+	mState = state;
 }
 
 inline GameState Game::getState() const {
-	return mGameState;
+	return mState;
 }
 
 inline InputSystem* Game::getInputSystem() {
 	return mInputSystem.get();
 }
 
+inline RenderSystem* Game::getRenderSystem() {
+	return mRenderSystem.get();
+}
+
 inline WindowSystem* Game::getWindowSystem() {
 	return mWindowSystem.get();
+}
+
+inline WorldSystem* Game::getWorldSystem() {
+	return mWorldSystem.get();
 }
 
 } // namespace engine

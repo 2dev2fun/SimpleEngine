@@ -34,4 +34,8 @@ using Vec2 = Vector2<Float32>;
 using Vec3 = Vector3<Float32>;
 using Vec4 = Vector4<Float32>;
 
+using Entity = UInt32;
+using Index  = UInt32;
+using Mask   = UInt64;
+
 } // namespace engine

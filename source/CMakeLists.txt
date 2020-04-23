@@ -6,9 +6,13 @@ add_library(EngineLib
 	"Command.cpp"
 	"Command/Exit.cpp"
 	"Command/Test.cpp"
+	"Component/Mesh.cpp"
+	"Component/Transform3D.cpp"
 	"Game.cpp"
 	"System/Input.cpp"
-	"System/Window.cpp")
+	"System/Render.cpp"
+	"System/Window.cpp"
+	"System/World.cpp")
 
 target_link_libraries(EngineLib glfw)
 target_link_libraries(EngineLib glad)

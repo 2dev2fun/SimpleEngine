@@ -2,7 +2,7 @@
 
 #include "Command/Exit.h"
 #include "Game.h"
-#include "Game/State.h"
+#include "GameState.h"
 #include "System/Window.h"
 
 using namespace engine;
