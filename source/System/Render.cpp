@@ -21,7 +21,9 @@ void RenderSystem::update() {
 
 	Mask mask = COMPONENT_MESH | COMPONENT_TRANSFORM3D;
 
-	for (UInt32 entity = 0; entity < meshTable->getSize(); ++entity) {
+	for (UInt32 index = 0; index < meshTable->getSize(); ++index) {
+		auto entity = meshTable->getEntity(index);
+
 		if (!worldSystem->hasComponent(entity, mask)) { continue; }
 
 		auto* meshComponent = worldSystem->getMeshComponent(entity);
