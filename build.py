@@ -6,6 +6,8 @@ import multiprocessing
 
 cores = multiprocessing.cpu_count();
 
+os.system('git submodule update --init --recursive')
+
 if not os.path.exists("build"):
     os.makedirs("build")
 

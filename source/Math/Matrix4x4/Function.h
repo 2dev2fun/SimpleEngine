@@ -16,5 +16,10 @@ Matrix4x4<T> transpose(Matrix4x4<T> const& value) {
 			Vector4<T>(value[0][3], value[1][3], value[2][3], value[3][3]));
 }
 
+template <typename T>
+T const* getPointer(Matrix4x4<T> const& value) {
+	return &value[0][0];
+}
+
 } // namespace math
 } // namespace engine

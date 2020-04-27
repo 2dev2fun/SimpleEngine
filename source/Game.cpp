@@ -2,14 +2,13 @@
 
 #include "Command/Exit.h"
 #include "Command/Test.h"
+#include "Component/Mesh.h"
+#include "Component/Transform3D.h"
 #include "Game.h"
 #include "System/Input.h"
 #include "System/Render.h"
 #include "System/Window.h"
 #include "System/World.h"
-
-#include "Component/Mesh.h"
-#include "Component/Transform3D.h"
 
 #include <chrono>
 #include <iostream>
@@ -20,15 +19,20 @@ using namespace engine;
 
 Game::Game() : mState(GAME_STATE_PLAY) {
 	mInputSystem  = std::make_unique<InputSystem>(this);
-	mRenderSystem = std::make_unique<RenderSystem>(this);
 	mWindowSystem = std::make_unique<WindowSystem>(this, 1024, 768);
+	mRenderSystem = std::make_unique<RenderSystem>(this);
 	mWorldSystem  = std::make_unique<WorldSystem>(this, 100);
 
 	mInputSystem->attachCommand(std::make_unique<ExitCommand>(this, KEY_ESCAPE, STATE_RELEASED));
 	mInputSystem->attachCommand(std::make_unique<TestCommand>(this, KEY_T,      STATE_PRESSED));
 }
 
-Game::~Game() {}
+Game::~Game() {
+	mWorldSystem.release();
+	mInputSystem.release();
+	mRenderSystem.release();
+	mWorldSystem.release();
+}
 
 void Game::loop() {
 

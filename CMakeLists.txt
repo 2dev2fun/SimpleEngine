@@ -16,7 +16,8 @@ include_directories(
 	"source"
 	"library/catch2/include"
 	"library/glad/include"
-	"modules/glfw/include")
+	"modules/glfw/include"
+	"modules/spdlog/include")
 
 add_library(ProjectLib INTERFACE)
 target_link_libraries(${PROJECT_NAME} ProjectLib)
@@ -35,7 +36,12 @@ add_library(glad "library/glad/include/glad/glad.h" "library/glad/src/glad.c")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-add_subdirectory("./modules/glfw")
+add_subdirectory(modules/glfw)
+
+# Spdlog
+
+add_subdirectory(modules/spdlog)
+target_link_libraries(ProjectLib INTERFACE spdlog::spdlog)
 
 # SimpleEngine
 

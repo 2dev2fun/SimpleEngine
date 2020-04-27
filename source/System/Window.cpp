@@ -20,7 +20,7 @@ WindowSystem::WindowSystem(Game* game, UInt32 width, UInt32 height)
 	}
 
 	if (!glfwInit()) {
-		LOG_ERROR("Failed to initialize GLFW.");
+		LOG_CRITICAL("Failed to initialize GLFW.");
 	}
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -31,7 +31,7 @@ WindowSystem::WindowSystem(Game* game, UInt32 width, UInt32 height)
 	mWindow = glfwCreateWindow(mWidth, mHeight, "Game", nullptr, nullptr);
 
 	if (mWindow == nullptr) {
-		LOG_ERROR("Failed to create GLFW window.");
+		LOG_CRITICAL("Failed to create GLFW window.");
 		glfwTerminate();
 	}
 
@@ -43,7 +43,7 @@ WindowSystem::WindowSystem(Game* game, UInt32 width, UInt32 height)
 	glfwGetCursorPos(mWindow, &mLastFrame.mousePositionX,    &mLastFrame.mousePositionY);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		LOG_ERROR("Failed to Initialize GLAD.");
+		LOG_CRITICAL("Failed to Initialize GLAD.");
 	}
 }
 
@@ -81,4 +81,6 @@ Bool WindowSystem::isKey(Key key, State state) const {
 
 		default: ASSERT(0);
 	}
+
+	return false;
 }

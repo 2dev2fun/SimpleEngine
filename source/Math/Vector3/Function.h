@@ -34,5 +34,10 @@ Vector3<T> normalize(Vector3<T> const& value) {
 	return Vector3<T>(value.x / length, value.y / length, value.z / length);
 }
 
+template <typename T>
+T const* getPointer(Vector3<T> const& value) {
+	return &value[0];
+}
+
 } // namespace math
 } // namespace engine

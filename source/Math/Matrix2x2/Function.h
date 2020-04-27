@@ -14,5 +14,10 @@ Matrix2x2<T> transpose(Matrix2x2<T> const& value) {
 			Vector2<T>(value[0][1], value[1][1]));
 }
 
+template <typename T>
+T const* getPointer(Matrix2x2<T> const& value) {
+	return &value[0][0];
+}
+
 } // namespace math
 } // namespace engine

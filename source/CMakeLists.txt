@@ -11,10 +11,14 @@ add_library(EngineLib
 	"Game.cpp"
 	"System/Input.cpp"
 	"System/Render.cpp"
+	"System/Render/Backend/OpenGL/Shader.cpp"
+	"System/Render/Backend/OpenGL/Shader/Mesh.cpp"
+	"System/Render/Backend/OpenGL/VertexArray.cpp"
+	"System/Render/Technique/Mesh.cpp"
 	"System/Window.cpp"
 	"System/World.cpp")
 
-target_link_libraries(EngineLib glfw)
 target_link_libraries(EngineLib glad)
+target_link_libraries(EngineLib glfw)
 
 target_link_libraries(ProjectLib INTERFACE EngineLib)

@@ -1,4 +1,5 @@
 -Isource
--Ilibrary/glad/include
 -Ilibrary/catch2/include
+-Ilibrary/glad/include
 -Imodules/glfw/include
+-Imodules/spdlog/include

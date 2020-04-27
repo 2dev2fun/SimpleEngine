@@ -4,6 +4,8 @@
 
 namespace engine {
 
+// Math -----------------------------------------------------------------------
+
 template <typename T>
 class Matrix2x2;
 
@@ -25,12 +27,30 @@ class Vector3;
 template <typename T>
 class Vector4;
 
+// General --------------------------------------------------------------------
+
 class Command;
 class Game;
 
+// InputSystem ----------------------------------------------------------------
+
 class InputSystem;
+
+// RenderSystem ---------------------------------------------------------------
+
 class RenderSystem;
+
+class Shader;
+class MeshShader;
+
+class MeshTechnique;
+
+// WindowSystem ---------------------------------------------------------------
+
 class WindowSystem;
+
+// WorldSystem ----------------------------------------------------------------
+
 class WorldSystem;
 
 class MeshComponent;

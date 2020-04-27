@@ -15,5 +15,10 @@ Matrix3x3<T> transpose(Matrix3x3<T> const& value) {
 			Vector3<T>(value[0][2], value[1][2], value[2][2]));
 }
 
+template <typename T>
+T const* getPointer(Matrix3x3<T> const& value) {
+	return &value[0][0];
+}
+
 } // namespace math
 } // namespace engine

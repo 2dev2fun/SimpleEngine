@@ -8,16 +8,16 @@
 
 namespace engine {
 
-class RenderSystem {
+class MeshTechnique {
 public:
-	RenderSystem(Game* game);
-	~RenderSystem();
+	MeshTechnique(Game* game);
+	~MeshTechnique();
 
 	void update();
 private:
 	Game* mGame;
 
-	std::unique_ptr<MeshTechnique> mMeshTechnique;
+	std::unique_ptr<MeshShader> mMeshShader;
 };
 
 } // namespace engine

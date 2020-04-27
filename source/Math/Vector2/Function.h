@@ -26,5 +26,10 @@ Vector2<T> normalize(Vector2<T> const& value) {
 	return Vector2<T>(value.x / length, value.y / length);
 }
 
+template <typename T>
+T const* getPointer(Vector2<T> const& value) {
+	return &value[0];
+}
+
 } // namespace math
 } // namespace engine

@@ -9,7 +9,8 @@ def Settings(**kwargs):
         '-Wextra'
         '-Werror',
         '-isystem', './source',
-        '-isystem', './library/glad/include',
         '-isystem', './library/catch2/include',
+        '-isystem', './library/glad/include',
         '-isystem', './modules/glfw/include',
+        '-isystem', './modules/spdlog/include',
     ] }
