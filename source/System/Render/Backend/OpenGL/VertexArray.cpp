@@ -2,14 +2,92 @@
 
 #include "System/Render/Backend/OpenGL/VertexArray.h"
 
-using namespace engine;
+namespace engine {
+
+VertexArray::VertexArray(std::vector<Float32> const& positions)
+		: mDrawType(DrawType::SIMPLE)
+		, mMode(GL_TRIANGLES)
+		, mType(GL_UNSIGNED_SHORT)
+		, mCount(positions.size()) {
+	UInt32 positionsSize = positions.size() * sizeof(Float32);
+	UInt32 size = positionsSize;
+
+	glGenVertexArrays(1, &mVAO);
+	glGenBuffers(1, &mVBO);
+
+	glBindVertexArray(mVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STATIC_DRAW);
+
+	UInt32 positionsOffset = 0;
+
+	setPositions(positions, positionsOffset);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
+VertexArray::VertexArray(std::vector<Float32> const& positions, std::vector<UInt16> const& indices)
+		: mDrawType(DrawType::INDEX)
+		, mMode(GL_TRIANGLES)
+		, mType(GL_UNSIGNED_SHORT)
+		, mCount(indices.size()) {
+	UInt32 positionsSize = positions.size() * sizeof(Float32);
+	UInt32 size = positionsSize;
+
+	glGenVertexArrays(1, &mVAO);
+	glGenBuffers(1, &mVBO);
+	glGenBuffers(1, &mIBO);
+
+	glBindVertexArray(mVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STATIC_DRAW);
+
+	UInt32 positionsOffset = 0;
+
+	setPositions(positions, positionsOffset);
+	setIndices(indices);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
+VertexArray::VertexArray(std::vector<Float32> const& positions, std::vector<UInt32> const& indices)
+		: mDrawType(DrawType::INDEX)
+		, mMode(GL_TRIANGLES)
+		, mType(GL_UNSIGNED_INT)
+		, mCount(indices.size()) {
+	UInt32 positionsSize = positions.size() * sizeof(Float32);
+	UInt32 size = positionsSize;
+
+	glGenVertexArrays(1, &mVAO);
+	glGenBuffers(1, &mVBO);
+	glGenBuffers(1, &mIBO);
+
+	glBindVertexArray(mVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_STATIC_DRAW);
+
+	UInt32 positionsOffset = 0;
+
+	setPositions(positions, positionsOffset);
+	setIndices(indices);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
 
 VertexArray::VertexArray(
 		const std::vector<Float32>& positions,
 		const std::vector<Float32>& normals,
 		const std::vector<Float32>& texCoords,
 		const std::vector<UInt16>&  indices)
-		: mType(GL_UNSIGNED_SHORT)
+		: mDrawType(DrawType::INDEX)
+		, mMode(GL_TRIANGLES)
+		, mType(GL_UNSIGNED_SHORT)
 		, mCount(indices.size())
 		, mVAO(0xFFFFFFFF)
 		, mVBO(0xFFFFFFFF)
@@ -47,7 +125,9 @@ VertexArray::VertexArray(
 		const std::vector<Float32>& normals,
 		const std::vector<Float32>& texCoords,
 		const std::vector<UInt32>&  indices)
-		: mType(GL_UNSIGNED_INT)
+		: mDrawType(DrawType::INDEX)
+		, mMode(GL_TRIANGLES)
+		, mType(GL_UNSIGNED_INT)
 		, mCount(indices.size())
 		, mVAO(0xFFFFFFFF)
 		, mVBO(0xFFFFFFFF)
@@ -87,7 +167,9 @@ VertexArray::VertexArray(
 		const std::vector<Float32>& jointWeights,
 		const std::vector<UInt16>&  jointIndices,
 		const std::vector<UInt16>&  indices)
-		: mType(GL_UNSIGNED_SHORT)
+		: mDrawType(DrawType::INDEX)
+		, mMode(GL_TRIANGLES)
+		, mType(GL_UNSIGNED_SHORT)
 		, mCount(indices.size())
 		, mVAO(0xFFFFFFFF)
 		, mVBO(0xFFFFFFFF)
@@ -133,7 +215,9 @@ VertexArray::VertexArray(
 		const std::vector<Float32>& jointWeights,
 		const std::vector<UInt32>&  jointIndices,
 		const std::vector<UInt32>&  indices)
-		: mType(GL_UNSIGNED_INT)
+		: mDrawType(DrawType::INDEX)
+		, mMode(GL_TRIANGLES)
+		, mType(GL_UNSIGNED_INT)
 		, mCount(indices.size())
 		, mVAO(0xFFFFFFFF)
 		, mVBO(0xFFFFFFFF)
@@ -180,7 +264,18 @@ VertexArray::~VertexArray() {
 
 void VertexArray::draw() {
 	glBindVertexArray(mVAO);
-	glDrawElements(GL_TRIANGLES, mCount, mType, nullptr);
+
+	switch (mDrawType) {
+		case DrawType::INDEX:
+			glDrawElements(mMode, mCount, mType, nullptr);
+			break;
+		case DrawType::SIMPLE:
+			glDrawArrays(mMode, 0, mCount);
+			break;
+		default:
+			LOG_CRITICAL("DrawType undefined!");
+	}
+
 	glBindVertexArray(0);
 }
 
@@ -229,3 +324,5 @@ void VertexArray::setIndices(std::vector<UInt32> const& indices) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(UInt32), &indices[0], GL_STATIC_DRAW);
 }
+
+} // namespace engine

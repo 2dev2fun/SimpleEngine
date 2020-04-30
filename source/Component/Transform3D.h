@@ -3,6 +3,9 @@
 #pragma once
 
 #include "Engine.h"
+#include "Math/Matrix4x4.h"
+#include "Math/Quaternion.h"
+#include "Math/Vector3.h"
 
 namespace engine {
 
@@ -12,31 +15,17 @@ public:
 	void free();
 
 	void update();
-
-	void setData1(Float32 data);
-	auto getData1() const;
-
-	void setData2(Float32 data);
-	auto getData2() const;
 private:
-	Float32 mData1;
-	Float32 mData2;
+	Bool    mRecompute;
+
+	Vec3    mTransform;
+	Float32 mScale;
+	Quat    mRotation;
+
+	Vec3    mForward;
+	Vec3    mRight;
+
+	Mat4    mWorldTransform;
 };
-
-inline void Transform3DComponent::setData1(Float32 data) {
-	mData1 = data;
-}
-
-inline auto Transform3DComponent::getData1() const {
-	return mData1;
-}
-
-inline void Transform3DComponent::setData2(Float32 data) {
-	mData2 = data;
-}
-
-inline auto Transform3DComponent::getData2() const {
-	return mData2;
-}
 
 } // namespace engine

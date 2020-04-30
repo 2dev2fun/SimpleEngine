@@ -2,12 +2,14 @@
 
 #pragma once
 
-namespace engine {
+#include "Engine.h"
 
-enum Component {
-	COMPONENT_MESH        = 1 << 0,
-	COMPONENT_MOVE        = 1 << 1,
-	COMPONENT_TRANSFORM3D = 1 << 2,
+namespace engine {
+namespace gltf2 {
+
+struct Image {
+	std::string uri;
 };
 
+} // namespace gltf2
 } // namespace engine

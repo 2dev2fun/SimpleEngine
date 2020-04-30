@@ -3,6 +3,10 @@
 #pragma once
 
 #include "Engine.h"
+#include "System/Render/Mesh.h"
+
+#include <memory>
+#include <vector>
 
 namespace engine {
 
@@ -13,30 +17,24 @@ public:
 
 	void update();
 
-	void setData1(Float32 data);
-	auto getData1() const;
+	void setMesh(std::shared_ptr<Mesh> mesh);
+	auto getMesh();
 
-	void setData2(Float32 data);
-	auto getData2() const;
+	void draw();
 private:
-	Float32 mData1;
-	Float32 mData2;
+	std::shared_ptr<Mesh> mMesh;
 };
 
-inline void MeshComponent::setData1(Float32 data) {
-	mData1 = data;
+inline void MeshComponent::setMesh(std::shared_ptr<Mesh> mesh) {
+	mMesh = mesh;
 }
 
-inline auto MeshComponent::getData1() const {
-	return mData1;
+inline auto MeshComponent::getMesh() {
+	return mMesh;
 }
 
-inline void MeshComponent::setData2(Float32 data) {
-	mData2 = data;
-}
-
-inline auto MeshComponent::getData2() const {
-	return mData2;
+inline void MeshComponent::draw() {
+	mMesh->draw();
 }
 
 } // namespace engine

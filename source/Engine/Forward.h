@@ -32,6 +32,16 @@ class Vector4;
 class Command;
 class Game;
 
+// Utility --------------------------------------------------------------------
+
+class GLTF2;
+class Image;
+
+// Manager --------------------------------------------------------------------
+
+class MeshManager;
+class TextureManager;
+
 // InputSystem ----------------------------------------------------------------
 
 class InputSystem;
@@ -42,6 +52,11 @@ class RenderSystem;
 
 class Shader;
 class MeshShader;
+
+class Mesh;
+class Primitive;
+class Texture;
+class VertexArray;
 
 class MeshTechnique;
 

@@ -4,3 +4,9 @@
 [submodule "modules/spdlog"]
 	path = modules/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "modules/stb"]
+	path = modules/stb
+	url = https://github.com/nothings/stb.git
+[submodule "modules/rapidjson"]
+	path = modules/rapidjson
+	url = https://github.com/Tencent/rapidjson.git

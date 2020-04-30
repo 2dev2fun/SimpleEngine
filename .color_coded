@@ -2,4 +2,6 @@
 -Ilibrary/catch2/include
 -Ilibrary/glad/include
 -Imodules/glfw/include
+-Imodules/rapidjson/include
 -Imodules/spdlog/include
+-Imodules/stb

@@ -4,13 +4,10 @@
 
 using namespace engine;
 
-void MeshComponent::init() {
-	mData1 = 0.0f;
-	mData1 = 0.0f;
+void MeshComponent::init() {}
+
+void MeshComponent::free() {
+	mMesh = nullptr;
 }
 
-void MeshComponent::free() {}
-
-void MeshComponent::update() {
-	std::cout << "MeshComponent:\t" << mData1 << '\t' << mData2 << std::endl;
-}
+void MeshComponent::update() {}

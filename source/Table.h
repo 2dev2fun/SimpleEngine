@@ -59,6 +59,7 @@ Index Table<Component>::createComponent(Entity entity) {
 template <typename Component>
 void Table<Component>::removeComponent(Index index) {
 	ASSERT(index < mCapacity);
+	mComponents[index].free();
 	replaceWithLast(index);
 	popLast();
 }

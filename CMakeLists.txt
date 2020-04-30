@@ -17,7 +17,9 @@ include_directories(
 	"library/catch2/include"
 	"library/glad/include"
 	"modules/glfw/include"
-	"modules/spdlog/include")
+	"modules/rapidjson/include"
+	"modules/spdlog/include"
+	"modules/stb")
 
 add_library(ProjectLib INTERFACE)
 target_link_libraries(${PROJECT_NAME} ProjectLib)

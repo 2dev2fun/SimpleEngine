@@ -5,19 +5,27 @@
 #include "Component/Mesh.h"
 #include "Component/Transform3D.h"
 #include "Game.h"
+#include "Manager/Mesh.h"
+#include "Manager/Texture.h"
 #include "System/Input.h"
 #include "System/Render.h"
+#include "System/Render/Mesh.h"
 #include "System/Window.h"
 #include "System/World.h"
+#include "Utility/GLTF2.h"
 
 #include <chrono>
 #include <iostream>
 #include <memory>
+#include <string>
 #include <thread>
 
 using namespace engine;
 
 Game::Game() : mState(GAME_STATE_PLAY) {
+	mMeshManager    = std::make_unique<MeshManager>();
+	mTextureManager = std::make_unique<TextureManager>();
+
 	mInputSystem  = std::make_unique<InputSystem>(this);
 	mWindowSystem = std::make_unique<WindowSystem>(this, 1024, 768);
 	mRenderSystem = std::make_unique<RenderSystem>(this);
@@ -36,17 +44,18 @@ Game::~Game() {
 
 void Game::loop() {
 
+	std::string const dir = "/data/project/glTF-Sample-Models/2.0";
+	std::string const obj = "/TriangleWithoutIndices/glTF/TriangleWithoutIndices.gltf";
+
 	//-------------------------------------------------------------------------
 
 	auto entity = mWorldSystem->createEntity();
 
 	auto* meshComponent = mWorldSystem->createMeshComponent(entity);
-	meshComponent->setData1(1.5f);
-	meshComponent->setData2(2.5f);
+	meshComponent->setMesh(std::make_shared<Mesh>(dir + obj));
 
 	auto* transform3DComponent = mWorldSystem->createTransform3DComponent(entity);
-	transform3DComponent->setData1(3.5f);
-	transform3DComponent->setData2(4.5f);
+	UNUSED(transform3DComponent);
 
 	//-------------------------------------------------------------------------
 

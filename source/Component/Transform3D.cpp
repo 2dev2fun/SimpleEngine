@@ -4,13 +4,8 @@
 
 using namespace engine;
 
-void Transform3DComponent::init() {
-	mData1 = 0.0f;
-	mData1 = 0.0f;
-}
+void Transform3DComponent::init() {}
 
 void Transform3DComponent::free() {}
 
-void Transform3DComponent::update() {
-	std::cout << "Transform3DComponent:\t" << mData1 << '\t' << mData2 << std::endl;
-}
+void Transform3DComponent::update() {}

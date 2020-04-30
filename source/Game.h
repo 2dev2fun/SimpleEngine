@@ -20,6 +20,9 @@ public:
 	void setState(GameState state);
 	GameState getState() const;
 
+	MeshManager*    getMeshManager();
+	TextureManager* getTextureManager();
+
 	InputSystem*  getInputSystem();
 	RenderSystem* getRenderSystem();
 	WindowSystem* getWindowSystem();
@@ -29,6 +32,9 @@ private:
 	void operator=(Game const&) = delete;
 
 	GameState mState;
+
+	std::unique_ptr<MeshManager>    mMeshManager;
+	std::unique_ptr<TextureManager> mTextureManager;
 
 	std::unique_ptr<InputSystem>  mInputSystem;
 	std::unique_ptr<RenderSystem> mRenderSystem;
@@ -42,6 +48,14 @@ inline void Game::setState(GameState state) {
 
 inline GameState Game::getState() const {
 	return mState;
+}
+
+inline MeshManager* Game::getMeshManager() {
+	return mMeshManager.get();
+}
+
+inline TextureManager* Game::getTextureManager() {
+	return mTextureManager.get();
 }
 
 inline InputSystem* Game::getInputSystem() {

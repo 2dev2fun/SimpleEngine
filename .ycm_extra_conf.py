@@ -12,5 +12,7 @@ def Settings(**kwargs):
         '-isystem', './library/catch2/include',
         '-isystem', './library/glad/include',
         '-isystem', './modules/glfw/include',
+        '-isystem', './modules/rapidjson/include',
         '-isystem', './modules/spdlog/include',
+        '-isystem', './modules/stb',
     ] }

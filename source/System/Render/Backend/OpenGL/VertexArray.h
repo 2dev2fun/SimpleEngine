@@ -12,6 +12,10 @@ namespace engine {
 
 class VertexArray {
 public:
+	VertexArray(std::vector<Float32> const& positions);
+	VertexArray(std::vector<Float32> const& positions, std::vector<UInt16> const& indices);
+	VertexArray(std::vector<Float32> const& positions, std::vector<UInt32> const& indices);
+
 	VertexArray(
 			const std::vector<Float32>& positions,
 			const std::vector<Float32>& normals,
@@ -54,12 +58,20 @@ protected:
 	void setIndices(std::vector<UInt16> const& indices);
 	void setIndices(std::vector<UInt32> const& indices);
 private:
+	enum class DrawType {
+		SIMPLE,
+		INDEX,
+	};
+
+	DrawType mDrawType;
+
+	GLenum mMode;
 	GLenum mType;
 	GLsizei mCount;
 
-	GLuint mVAO;
-	GLuint mVBO;
-	GLuint mIBO;
+	GLuint mVAO = 0xFFFFFFFF;
+	GLuint mVBO = 0xFFFFFFFF;
+	GLuint mIBO = 0xFFFFFFFF;
 };
 
 } // namespace engine
