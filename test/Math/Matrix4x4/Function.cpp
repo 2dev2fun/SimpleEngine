@@ -5,7 +5,7 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Matrix4x4 Function", "[Matrix4x4 Function]") {
 	Vector4<Float32> a( 1,  2,  3,  4);
@@ -26,4 +26,27 @@ TEST_CASE("Math Matrix4x4 Function", "[Matrix4x4 Function]") {
 
 		REQUIRE(res == ref);
 	}
+
+	SECTION("T const* getPointer(Matrix3x3<T> const& value)") {
+		auto* res = math::getPointer(A);
+
+		REQUIRE(res[0]  == 1);
+		REQUIRE(res[1]  == 2);
+		REQUIRE(res[2]  == 3);
+		REQUIRE(res[3]  == 4);
+		REQUIRE(res[4]  == 1);
+		REQUIRE(res[5]  == 2);
+		REQUIRE(res[6]  == 3);
+		REQUIRE(res[7]  == 4);
+		REQUIRE(res[8]  == 1);
+		REQUIRE(res[9]  == 2);
+		REQUIRE(res[10] == 3);
+		REQUIRE(res[11] == 4);
+		REQUIRE(res[12] == 1);
+		REQUIRE(res[13] == 2);
+		REQUIRE(res[14] == 3);
+		REQUIRE(res[15] == 4);
+	}
 }
+
+} // namespace engine

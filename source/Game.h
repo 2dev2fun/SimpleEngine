@@ -18,60 +18,72 @@ public:
 	void loop();
 
 	void setState(GameState state);
-	GameState getState() const;
+	auto getState() const;
 
-	MeshManager*    getMeshManager();
-	TextureManager* getTextureManager();
+	auto getMeshManager();
+	auto getTextureManager();
 
-	InputSystem*  getInputSystem();
-	RenderSystem* getRenderSystem();
-	WindowSystem* getWindowSystem();
-	WorldSystem*  getWorldSystem();
+	auto getInputSystem();
+	auto getMovementSystem();
+	auto getRenderSystem();
+	auto getSceneSystem();
+	auto getWindowSystem();
+	auto getWorldSystem();
 private:
 	Game(Game const&) = delete;
 	void operator=(Game const&) = delete;
 
 	GameState mState;
 
-	std::unique_ptr<MeshManager>    mMeshManager;
-	std::unique_ptr<TextureManager> mTextureManager;
+	std::shared_ptr<MeshManager>    mMeshManager;
+	std::shared_ptr<TextureManager> mTextureManager;
 
-	std::unique_ptr<InputSystem>  mInputSystem;
-	std::unique_ptr<RenderSystem> mRenderSystem;
-	std::unique_ptr<WindowSystem> mWindowSystem;
-	std::unique_ptr<WorldSystem>  mWorldSystem;
+	std::shared_ptr<InputSystem>    mInputSystem;
+	std::shared_ptr<MovementSystem> mMovementSystem;
+	std::shared_ptr<RenderSystem>   mRenderSystem;
+	std::shared_ptr<SceneSystem>    mSceneSystem;
+	std::shared_ptr<WindowSystem>   mWindowSystem;
+	std::shared_ptr<WorldSystem>    mWorldSystem;
 };
 
 inline void Game::setState(GameState state) {
 	mState = state;
 }
 
-inline GameState Game::getState() const {
+inline auto Game::getState() const {
 	return mState;
 }
 
-inline MeshManager* Game::getMeshManager() {
-	return mMeshManager.get();
+inline auto Game::getMeshManager() {
+	return mMeshManager;
 }
 
-inline TextureManager* Game::getTextureManager() {
-	return mTextureManager.get();
+inline auto Game::getTextureManager() {
+	return mTextureManager;
 }
 
-inline InputSystem* Game::getInputSystem() {
-	return mInputSystem.get();
+inline auto Game::getInputSystem() {
+	return mInputSystem;
 }
 
-inline RenderSystem* Game::getRenderSystem() {
-	return mRenderSystem.get();
+inline auto Game::getRenderSystem() {
+	return mRenderSystem;
 }
 
-inline WindowSystem* Game::getWindowSystem() {
-	return mWindowSystem.get();
+inline auto Game::getMovementSystem() {
+	return mMovementSystem;
 }
 
-inline WorldSystem* Game::getWorldSystem() {
-	return mWorldSystem.get();
+inline auto Game::getSceneSystem() {
+	return mSceneSystem;
+}
+
+inline auto Game::getWindowSystem() {
+	return mWindowSystem;
+}
+
+inline auto Game::getWorldSystem() {
+	return mWorldSystem;
 }
 
 } // namespace engine

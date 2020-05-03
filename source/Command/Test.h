@@ -12,6 +12,7 @@ namespace engine {
 class TestCommand : public Command {
 public:
 	TestCommand(Game* game, Key key, State state);
+	~TestCommand();
 
 	void execute() override;
 private:

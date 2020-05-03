@@ -1,18 +1,14 @@
 // Copyright (C) 2020 Maxim, 2dev2fun@gmail.com. All rights reserved.
 
-#include "Command/Exit.h"
-#include "Command/Test.h"
-#include "Component/Mesh.h"
-#include "Component/Transform3D.h"
 #include "Game.h"
 #include "Manager/Mesh.h"
 #include "Manager/Texture.h"
 #include "System/Input.h"
+#include "System/Movement.h"
 #include "System/Render.h"
-#include "System/Render/Mesh.h"
+#include "System/Scene.h"
 #include "System/Window.h"
 #include "System/World.h"
-#include "Utility/GLTF2.h"
 
 #include <chrono>
 #include <iostream>
@@ -20,45 +16,30 @@
 #include <string>
 #include <thread>
 
-using namespace engine;
+namespace engine {
 
 Game::Game() : mState(GAME_STATE_PLAY) {
-	mMeshManager    = std::make_unique<MeshManager>();
-	mTextureManager = std::make_unique<TextureManager>();
+	mMeshManager    = std::make_shared<MeshManager>();
+	mTextureManager = std::make_shared<TextureManager>();
 
-	mInputSystem  = std::make_unique<InputSystem>(this);
-	mWindowSystem = std::make_unique<WindowSystem>(this, 1024, 768);
-	mRenderSystem = std::make_unique<RenderSystem>(this);
-	mWorldSystem  = std::make_unique<WorldSystem>(this, 100);
-
-	mInputSystem->attachCommand(std::make_unique<ExitCommand>(this, KEY_ESCAPE, STATE_RELEASED));
-	mInputSystem->attachCommand(std::make_unique<TestCommand>(this, KEY_T,      STATE_PRESSED));
+	mInputSystem    = std::make_shared<InputSystem>(this);
+	mWindowSystem   = std::make_shared<WindowSystem>(this, 1024, 768);
+	mWorldSystem    = std::make_shared<WorldSystem>(this, 100);
+	mRenderSystem   = std::make_shared<RenderSystem>(this);
+	mSceneSystem    = std::make_shared<SceneSystem>(this);
+	mMovementSystem = std::make_shared<MovementSystem>(this);
 }
 
 Game::~Game() {
-	mWorldSystem.release();
-	mInputSystem.release();
-	mRenderSystem.release();
-	mWorldSystem.release();
+	mMovementSystem = nullptr;
+	mSceneSystem    = nullptr;
+	mWorldSystem    = nullptr;
+	mInputSystem    = nullptr;
+	mRenderSystem   = nullptr;
+	mWorldSystem    = nullptr;
 }
 
 void Game::loop() {
-
-	std::string const dir = "/data/project/glTF-Sample-Models/2.0";
-	std::string const obj = "/TriangleWithoutIndices/glTF/TriangleWithoutIndices.gltf";
-
-	//-------------------------------------------------------------------------
-
-	auto entity = mWorldSystem->createEntity();
-
-	auto* meshComponent = mWorldSystem->createMeshComponent(entity);
-	meshComponent->setMesh(std::make_shared<Mesh>(dir + obj));
-
-	auto* transform3DComponent = mWorldSystem->createTransform3DComponent(entity);
-	UNUSED(transform3DComponent);
-
-	//-------------------------------------------------------------------------
-
 	using namespace std::chrono;
 	using namespace std::chrono_literals;
 	using namespace std::this_thread;
@@ -79,6 +60,7 @@ void Game::loop() {
 		mWindowSystem->update();
 		mInputSystem->update();
 		mWorldSystem->update();
+		mMovementSystem->update();
 		mRenderSystem->update();
 
 		auto endFrame = high_resolution_clock::now();
@@ -91,3 +73,5 @@ void Game::loop() {
 		//std::cout << "frame time:\t" << frameTime << " μs."<< std::endl;
 	}
 }
+
+} // namespace engine

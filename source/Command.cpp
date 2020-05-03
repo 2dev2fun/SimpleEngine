@@ -2,6 +2,8 @@
 
 #include "Command.h"
 
-using namespace engine;
+namespace engine {
 
 Command::Command(Game* game) : mGame(game) {}
+
+} // namespace engine

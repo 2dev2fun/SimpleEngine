@@ -5,7 +5,7 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Matrix2x2", "[Matrix2x2]") {
 	Vector2<Float32> a(1, 2);
@@ -28,3 +28,5 @@ TEST_CASE("Math Matrix2x2", "[Matrix2x2]") {
 		REQUIRE(res[1] == b);
 	}
 }
+
+} // namespace engine

@@ -18,9 +18,9 @@
 #include "Utility/GLTF2/Skin.h"
 #include "Utility/GLTF2/Texture.h"
 
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 #include <memory>
 #include <string>
@@ -33,7 +33,7 @@ namespace engine {
 
 class GLTF2 {
 public:
-	GLTF2(const std::string& path);
+	GLTF2(std::string const& path);
 	~GLTF2();
 
 	void fillMesh(Mesh* mesh);

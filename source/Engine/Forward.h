@@ -46,9 +46,17 @@ class TextureManager;
 
 class InputSystem;
 
+// MovementSystem -------------------------------------------------------------
+
+class MovementSystem;
+
 // RenderSystem ---------------------------------------------------------------
 
 class RenderSystem;
+
+class Camera;
+class FollowCamera;
+class OrbitCamera;
 
 class Shader;
 class MeshShader;
@@ -60,6 +68,10 @@ class VertexArray;
 
 class MeshTechnique;
 
+// SceneSystem ----------------------------------------------------------------
+
+class SceneSystem;
+
 // WindowSystem ---------------------------------------------------------------
 
 class WindowSystem;
@@ -69,6 +81,7 @@ class WindowSystem;
 class WorldSystem;
 
 class MeshComponent;
+class MoveComponent;
 class Transform3DComponent;
 
 template <typename Component>

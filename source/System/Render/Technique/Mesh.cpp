@@ -2,6 +2,9 @@
 
 #include "Component.h"
 #include "Game.h"
+#include "Math/Matrix4x4.h"
+#include "Math/Matrix4x4/Operator.h"
+#include "System/Render.h"
 #include "System/Render/Backend/OpenGL/Shader/Mesh.h"
 #include "System/Render/Technique/Mesh.h"
 #include "System/World.h"
@@ -9,7 +12,7 @@
 #include <memory>
 #include <string>
 
-using namespace engine;
+namespace engine {
 
 MeshTechnique::MeshTechnique(Game* game) : mGame(game) {
 	mMeshShader = std::make_unique<MeshShader>();
@@ -18,9 +21,12 @@ MeshTechnique::MeshTechnique(Game* game) : mGame(game) {
 MeshTechnique::~MeshTechnique() {}
 
 void MeshTechnique::update() {
-	mMeshShader->active();
+	auto renderSystem = mGame->getRenderSystem();
 
-	auto* worldSystem = mGame->getWorldSystem();
+	mMeshShader->active();
+	mMeshShader->setViewProjection(renderSystem->getProjection() * renderSystem->getView());
+
+	auto worldSystem = mGame->getWorldSystem();
 
 	auto meshTable        = worldSystem->getMeshTable();
 	auto transform3DTable = worldSystem->getTransform3DTable();
@@ -34,10 +40,11 @@ void MeshTechnique::update() {
 
 		auto* meshComponent = worldSystem->getMeshComponent(entity);
 
-		//auto* transform3DComponent = worldSystem->getTransform3DComponent(entity);
+		auto* transform3DComponent = worldSystem->getTransform3DComponent(entity);
+		mMeshShader->setWorldTransform(transform3DComponent->getWorldTransform());
 
-		mMeshShader->setViewProjection(Mat4());
-		mMeshShader->setWorldTransform(Mat4());
 		meshComponent->draw();
 	}
 }
+
+} // namespace engine

@@ -12,6 +12,7 @@ namespace engine {
 class ExitCommand : public Command {
 public:
 	ExitCommand(Game* game, Key key, State state);
+	~ExitCommand();
 
 	void execute() override;
 private:

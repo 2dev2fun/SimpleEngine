@@ -1,9 +1,10 @@
 // Copyright (C) 2020 Maxim, 2dev2fun@gmail.com. All rights reserved.
 
 #include "System/World.h"
+
 #include <memory>
 
-using namespace engine;
+namespace engine {
 
 WorldSystem::WorldSystem(Game* game, UInt32 capacity)
 		: mGame(game)
@@ -12,8 +13,10 @@ WorldSystem::WorldSystem(Game* game, UInt32 capacity)
 		, mPlayer(0)
 		, mMasks(capacity)
 		, mMeshTable(std::make_shared<Table<MeshComponent>>(capacity))
+		, mMoveTable(std::make_shared<Table<MoveComponent>>(capacity))
 		, mTransform3DTable(std::make_shared<Table<Transform3DComponent>>(capacity))
 		, mMeshIndices(capacity)
+		, mMoveIndices(capacity)
 		, mTransform3DIndices(capacity) {}
 
 Entity WorldSystem::createEntity() {
@@ -27,6 +30,7 @@ Entity WorldSystem::createEntity() {
 
 void WorldSystem::removeEntity(Entity entity) {
 	if (hasComponent(entity, COMPONENT_MESH))        { removeMeshComponent(entity);        }
+	if (hasComponent(entity, COMPONENT_MOVE))        { removeMoveComponent(entity);        }
 	if (hasComponent(entity, COMPONENT_TRANSFORM3D)) { removeTransform3DComponent(entity); }
 
 	Entity lastEntity = --mSize;
@@ -38,6 +42,11 @@ void WorldSystem::removeEntity(Entity entity) {
 		mMeshTable->setEntity(mMeshIndices[lastEntity], entity);
 	}
 
+	if (hasComponent(lastEntity, COMPONENT_MOVE)) {
+		mMoveIndices[entity] = mMoveIndices[lastEntity];
+		mMoveTable->setEntity(mMoveIndices[lastEntity], entity);
+	}
+
 	if (hasComponent(lastEntity, COMPONENT_TRANSFORM3D)) {
 		mTransform3DIndices[entity] = mTransform3DIndices[lastEntity];
 		mTransform3DTable->setEntity(mTransform3DIndices[lastEntity], entity);
@@ -46,5 +55,8 @@ void WorldSystem::removeEntity(Entity entity) {
 
 void WorldSystem::update() {
 	mMeshTable->update();
+	mMoveTable->update();
 	mTransform3DTable->update();
 }
+
+} // namespace engine

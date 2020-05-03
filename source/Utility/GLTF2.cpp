@@ -68,13 +68,13 @@ void GLTF2::fillMesh(Mesh* meshResource) {
 			std::vector<Primitive> primitives(mMeshes[mesh].getPrimitivesSize());
 			for (UInt32 primitive = 0; primitive < mMeshes[mesh].getPrimitivesSize(); ++primitive) {
 				if (mMeshes[mesh].hasPosition(primitive))  { mask |= POSITION;   }
-				if (mMeshes[mesh].hasNormal(primitive))    { mask |= NORMAL;     }
-				if (mMeshes[mesh].hasTangent(primitive))   { mask |= TANGENT;    }
-				if (mMeshes[mesh].hasTexCoord0(primitive)) { mask |= TEXCOORD_0; }
-				if (mMeshes[mesh].hasTexCoord1(primitive)) { mask |= TEXCOORD_1; }
-				if (mMeshes[mesh].hasColor0(primitive))    { mask |= COLOR_0;    }
-				if (mMeshes[mesh].hasJoints0(primitive))   { mask |= JOINTS_0;   }
-				if (mMeshes[mesh].hasWeights0(primitive))  { mask |= WEIGHTS_0;  }
+				//if (mMeshes[mesh].hasNormal(primitive))    { mask |= NORMAL;     }
+				//if (mMeshes[mesh].hasTangent(primitive))   { mask |= TANGENT;    }
+				//if (mMeshes[mesh].hasTexCoord0(primitive)) { mask |= TEXCOORD_0; }
+				//if (mMeshes[mesh].hasTexCoord1(primitive)) { mask |= TEXCOORD_1; }
+				//if (mMeshes[mesh].hasColor0(primitive))    { mask |= COLOR_0;    }
+				//if (mMeshes[mesh].hasJoints0(primitive))   { mask |= JOINTS_0;   }
+				//if (mMeshes[mesh].hasWeights0(primitive))  { mask |= WEIGHTS_0;  }
 
 				if (mMeshes[mesh].hasIndices(primitive)) {
 					auto accessor = mMeshes[mesh].getIndices(primitive);
@@ -153,11 +153,8 @@ std::vector<UInt16> GLTF2::getIndices16(UInt32 mesh, UInt32 primitive) {
 	UInt32 bufferView = mAccessors[accessor].getBufferView();
 	UInt32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	UInt32 buffer = mBufferViews[bufferView].buffer;
-
-	Int32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
-
+	UInt32 buffer = mBufferViews[bufferView].getBuffer();
+	Int32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<UInt16> indices(count);
@@ -180,10 +177,8 @@ std::vector<UInt32> GLTF2::getIndices32(UInt32 mesh, UInt32 primitive) {
 	UInt32 bufferView = mAccessors[accessor].getBufferView();
 	UInt32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	UInt32 buffer = mBufferViews[bufferView].buffer;
-
-	Int32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
+	UInt32 buffer = mBufferViews[bufferView].getBuffer();
+	Int32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<UInt32> indices(count);
@@ -204,16 +199,14 @@ std::vector<UInt16> GLTF2::getJoints16(UInt32 mesh, UInt32 primitive) {
 	UInt32 bufferView = mAccessors[accessor].getBufferView();
 	UInt32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	UInt32 buffer = mBufferViews[bufferView].buffer;
-
-	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
+	UInt32 buffer = mBufferViews[bufferView].getBuffer();
+	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<UInt16> joints(4 * count);
 
-	ASSERT(mBufferViews[bufferView].byteStride != -1);
-	UInt32 byteStride = mBufferViews[bufferView].byteStride;
+	ASSERT(mBufferViews[bufferView].hasByteStride());
+	UInt32 byteStride = mBufferViews[bufferView].getByteStride();
 
 	for (UInt32 i = 0; i < count; ++i) {
 		UInt16* start = reinterpret_cast<UInt16*>(data + byteStride * i);
@@ -236,10 +229,8 @@ std::vector<UInt32> GLTF2::getJoints32(UInt32 mesh, UInt32 primitive) {
 	UInt32 bufferView = mAccessors[accessor].getBufferView();
 	UInt32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	UInt32 buffer = mBufferViews[bufferView].buffer;
-
-	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
+	UInt32 buffer = mBufferViews[bufferView].getBuffer();
+	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<UInt32> joints(4 * count);
@@ -265,10 +256,8 @@ std::vector<Float32> GLTF2::getWeights(UInt32 mesh, UInt32 primitive) {
 	UInt32 bufferView = mAccessors[accessor].getBufferView();
 	UInt32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	UInt32 buffer = mBufferViews[bufferView].buffer;
-
-	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
+	UInt32 buffer = mBufferViews[bufferView].getBuffer();
+	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<Float32> weights(4 * count);
@@ -294,10 +283,8 @@ std::vector<Float32> GLTF2::getTexCoord0(UInt32 mesh, UInt32 primitive) {
 	UInt32 bufferView = mAccessors[accessor].getBufferView();
 	UInt32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	UInt32 buffer = mBufferViews[bufferView].buffer;
-
-	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
+	UInt32 buffer = mBufferViews[bufferView].getBuffer();
+	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<Float32> texCoords(2 * count);
@@ -321,10 +308,8 @@ std::vector<Float32> GLTF2::getTexCoord1(UInt32 mesh, UInt32 primitive) {
 	UInt32 bufferView = mAccessors[accessor].getBufferView();
 	UInt32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	UInt32 buffer = mBufferViews[bufferView].buffer;
-
-	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
+	UInt32 buffer = mBufferViews[bufferView].getBuffer();
+	UInt32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<Float32> texCoords(2 * count);
@@ -348,15 +333,17 @@ std::vector<Float32> GLTF2::getPositions(UInt32 mesh, UInt32 primitive) {
 	Int32 bufferView = mAccessors[accessor].getBufferView();
 	Int32 count = mAccessors[accessor].getCount();
 
-	ASSERT(mBufferViews[bufferView].buffer >= 0);
-	Int32 buffer = mBufferViews[bufferView].buffer;
-
-	Int32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].byteOffset;
+	Int32 buffer = mBufferViews[bufferView].getBuffer();
+	Int32 byteOffset = mAccessors[accessor].getByteOffset() + mBufferViews[bufferView].getByteOffset();
 	UInt8* data = mBuffers[buffer].data.data() + byteOffset;
 
 	std::vector<Float32> positions(3 * count);
 
-	const UInt32 stride = 3 * sizeof(Float32);
+	UInt32 stride = 3 * sizeof(Float32);
+
+	if (mBufferViews[bufferView].hasByteStride()) {
+		stride = mBufferViews[bufferView].getByteStride();
+	}
 
 	for (Int32 i = 0; i < count; ++i) {
 		positions[3 * i + 0] = *reinterpret_cast<Float32*>(data + stride * i + 0 * sizeof(Float32));
@@ -370,24 +357,17 @@ std::vector<Float32> GLTF2::getPositions(UInt32 mesh, UInt32 primitive) {
 		UInt32 indicesBufferView = sparse.getIndices().getBufferView();
 		UInt32 valuesBufferView  = sparse.getValues().getBufferView();
 
-		ASSERT(mBufferViews[indicesBufferView].buffer >= 0);
-		UInt32 indicesBuffer = mBufferViews[indicesBufferView].buffer;
-
-		ASSERT(mBufferViews[valuesBufferView].buffer >= 0);
-		UInt32 valuesBuffer  = mBufferViews[valuesBufferView].buffer;
+		UInt32 indicesBuffer = mBufferViews[indicesBufferView].getBuffer();
+		UInt32 valuesBuffer  = mBufferViews[valuesBufferView].getBuffer();
 
 		UInt32 indicesByteOffset = 0;
 
-		ASSERT(mBufferViews[indicesBufferView].byteOffset >= 0);
-		indicesByteOffset += mBufferViews[indicesBufferView].byteOffset;
-
+		indicesByteOffset += mBufferViews[indicesBufferView].getByteOffset();
 		indicesByteOffset += sparse.getIndices().getByteOffset();
 
 		UInt32 valuesByteOffset = 0;
 
-		ASSERT(mBufferViews[valuesBufferView].byteOffset >= 0);
-		valuesByteOffset += mBufferViews[valuesBufferView].byteOffset;
-
+		valuesByteOffset += mBufferViews[valuesBufferView].getByteOffset();
 		valuesByteOffset += sparse.getValues().getByteOffset();
 
 		ASSERT(mBuffers[indicesBuffer].data.size() > 0);
@@ -561,49 +541,7 @@ void GLTF2::loadBufferViews() {
 	mBufferViews.resize(bufferViews.Size());
 
 	for (rj::SizeType i = 0; i < bufferViews.Size(); ++i) {
-		auto bufferIt = bufferViews[i].FindMember("buffer");
-		ASSERT(bufferIt != bufferViews[i].MemberEnd());
-
-		auto& buffer = bufferIt->value;
-		ASSERT(buffer.IsUint());
-
-		mBufferViews[i].buffer = buffer.GetUint();
-
-
-		auto byteOffsetIt = bufferViews[i].FindMember("byteOffset");
-		ASSERT(byteOffsetIt != bufferViews[i].MemberEnd());
-
-		auto& byteOffset = byteOffsetIt->value;
-		ASSERT(byteOffset.IsUint());
-
-		mBufferViews[i].byteOffset = byteOffset.GetUint();
-
-
-		auto byteLengthIt = bufferViews[i].FindMember("byteLength");
-		ASSERT(byteLengthIt != bufferViews[i].MemberEnd());
-
-		auto& byteLength = byteLengthIt->value;
-		ASSERT(byteLength.IsUint());
-
-		mBufferViews[i].byteLength = byteLength.GetUint();
-
-
-		auto byteStrideIt = bufferViews[i].FindMember("byteStride");
-		if (byteStrideIt != bufferViews[i].MemberEnd()) {
-			auto& byteStride = byteStrideIt->value;
-			ASSERT(byteStride.IsUint());
-			mBufferViews[i].byteStride = byteStride.GetUint();
-		}
-
-
-		auto targetIt = bufferViews[i].FindMember("target");
-		if (targetIt != bufferViews[i].MemberEnd()) {
-			auto& target = targetIt->value;
-			ASSERT(target.IsUint());
-			mBufferViews[i].target = target.GetUint();
-		} else {
-			mBufferViews[i].target = -1;
-		}
+		mBufferViews[i].load(bufferViews[i]);
 	}
 }
 

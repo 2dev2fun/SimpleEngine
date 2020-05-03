@@ -20,6 +20,7 @@ public:
 	void update();
 
 	Bool isKey(Key key, State state) const;
+	Bool isMouseButton(Button button, State state) const;
 
 	Bool isKeyPressed(Key key) const;
 	Bool isKeyReleased(Key key) const;
@@ -35,8 +36,8 @@ public:
 	Float32 getMouseOffsetX() const;
 	Float32 getMouseOffsetY() const;
 
-	UInt32 getWindowWidth() const;
-	UInt32 getWindowHeight() const;
+	UInt32 getWidth() const;
+	UInt32 getHeight() const;
 private:
 	Game* mGame;
 	GLFWwindow* mWindow;
@@ -95,11 +96,11 @@ inline Float32 WindowSystem::getMouseOffsetY() const {
 	return mLastFrame.mousePositionY - mCurrentFrame.mousePositionY;
 }
 
-inline UInt32 WindowSystem::getWindowWidth() const {
+inline UInt32 WindowSystem::getWidth() const {
 	return mWidth;
 }
 
-inline UInt32 WindowSystem::getWindowHeight() const {
+inline UInt32 WindowSystem::getHeight() const {
 	return mHeight;
 }
 

@@ -7,7 +7,7 @@
 
 #include <cmath>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Vector4 Function", "[Vector4 Function]") {
 	Vector4<Float32> a(1, 2, 3, 4);
@@ -38,4 +38,22 @@ TEST_CASE("Math Vector4 Function", "[Vector4 Function]") {
 
 		REQUIRE(res == ref);
 	}
+
+	SECTION("T const* getPointer(Vector4<T> const& value)") {
+		auto* res = math::getPointer(a);
+
+		REQUIRE(res[0] == 1);
+		REQUIRE(res[1] == 2);
+		REQUIRE(res[2] == 3);
+		REQUIRE(res[3] == 4);
+	}
+
+	SECTION("Vector4<T> invert(Vector4<T> const& value)") {
+		auto res = math::invert(a);
+		auto ref = Vector4<Float32>(-1, -2, -3, -4);
+
+		REQUIRE(res == ref);
+	}
 }
+
+} // namespace engine

@@ -31,5 +31,10 @@ T const* getPointer(Vector2<T> const& value) {
 	return &value[0];
 }
 
+template <typename T>
+Vector2<T> invert(Vector2<T> const& value) {
+	return Vector2<T>(-value.x, -value.y);
+}
+
 } // namespace math
 } // namespace engine

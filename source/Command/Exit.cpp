@@ -5,12 +5,19 @@
 #include "GameState.h"
 #include "System/Window.h"
 
-using namespace engine;
+namespace engine {
 
-ExitCommand::ExitCommand(Game* game, Key key, State state) : Command(game), mKey(key), mState(state) {}
+ExitCommand::ExitCommand(Game* game, Key key, State state)
+		: Command(game)
+		, mKey(key)
+		, mState(state) {}
+
+ExitCommand::~ExitCommand() {}
 
 void ExitCommand::execute() {
 	if (mGame->getWindowSystem()->isKey(mKey, mState)) {
 		mGame->setState(GAME_STATE_EXIT);
 	}
 }
+
+} // namespace engine

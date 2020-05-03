@@ -5,7 +5,7 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Quaternion", "[Quaternion]") {
 
@@ -36,3 +36,5 @@ TEST_CASE("Math Quaternion", "[Quaternion]") {
 		REQUIRE(res.w == 4);
 	}
 }
+
+} // namespace engine

@@ -4,7 +4,7 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Quaternion Operator", "[Quaternion Operator]") {
 	Quaternion<Float32> a(1, 2, 3, 4);
@@ -20,3 +20,5 @@ TEST_CASE("Math Quaternion Operator", "[Quaternion Operator]") {
 		REQUIRE(b != a);
 	}
 }
+
+} // namespace engine

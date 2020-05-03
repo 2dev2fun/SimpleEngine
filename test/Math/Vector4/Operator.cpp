@@ -4,11 +4,51 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Vector4 Operator", "[Vector4 Operator]") {
 	Vector4<Float32> a(1, 2, 3, 4);
 	Vector4<Float32> b(5, 6, 7, 8);
+
+	SECTION("Vector4<T>& operator+=(Vector4<T>& left, U right)") {
+		auto res = a;
+		res += 4;
+		auto ref = b;
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector4<T>& operator-=(Vector4<T>& left, U right)") {
+		auto res = b;
+		res -= 4;
+		auto ref = a;
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector4<T>& operator*=(Vector4<T>& left, U right)") {
+		auto res = a;
+		res *= 2;
+		auto ref = Vector4<Float32>(2, 4, 6, 8);
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector4<T>& operator+=(Vector4<T>& left, Vector4<T> const& right)") {
+		auto res = a;
+		res += b;
+		auto ref = Vector4<Float32>(6, 8, 10, 12);
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector4<T>& operator-=(Vector4<T>& left, Vector4<T> const& right)") {
+		auto res = a;
+		res -= b;
+		auto ref = Vector4<Float32>(-4, -4, -4, -4);
+
+		REQUIRE(res == ref);
+	}
 
 	SECTION("Bool operator==(Vector4<T> const& left, Vector4<T> const& right)") {
 		REQUIRE(a == a);
@@ -76,3 +116,5 @@ TEST_CASE("Math Vector4 Operator", "[Vector4 Operator]") {
 		REQUIRE(res == ref);
 	}
 }
+
+} // namespace engine

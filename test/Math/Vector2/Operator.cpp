@@ -4,11 +4,51 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Vector2 Operator", "[Vector2 Operator]") {
 	Vector2<Float32> a(1, 2);
 	Vector2<Float32> b(3, 4);
+
+	SECTION("Vector2<T>& operator+=(Vector2<T>& left, U right)") {
+		auto res = a;
+		res += 2;
+		auto ref = b;
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector2<T>& operator-=(Vector2<T>& left, U right)") {
+		auto res = b;
+		res -= 2;
+		auto ref = a;
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector2<T>& operator*=(Vector2<T>& left, U right)") {
+		auto res = a;
+		res *= 2;
+		auto ref = Vector2<Float32>(2, 4);
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector2<T>& operator+=(Vector2<T>& left, Vector2<T> const& right)") {
+		auto res = a;
+		res += b;
+		auto ref = Vector2<Float32>(4, 6);
+
+		REQUIRE(res == ref);
+	}
+
+	SECTION("Vector2<T>& operator-=(Vector2<T>& left, Vector2<T> const& right)") {
+		auto res = a;
+		res -= b;
+		auto ref = Vector2<Float32>(-2, -2);
+
+		REQUIRE(res == ref);
+	}
 
 	SECTION("Bool operator==(Vector2<T> const& left, Vector2<T> const& right)") {
 		REQUIRE(a == a);
@@ -76,3 +116,5 @@ TEST_CASE("Math Vector2 Operator", "[Vector2 Operator]") {
 		REQUIRE(res == ref);
 	}
 }
+
+} // namespace engine

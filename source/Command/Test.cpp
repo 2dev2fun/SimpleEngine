@@ -6,12 +6,19 @@
 
 #include <iostream>
 
-using namespace engine;
+namespace engine {
 
-TestCommand::TestCommand(Game* game, Key key, State state) : Command(game), mKey(key), mState(state) {}
+TestCommand::TestCommand(Game* game, Key key, State state)
+		: Command(game)
+		, mKey(key)
+		, mState(state) {}
+
+TestCommand::~TestCommand() {}
 
 void TestCommand::execute() {
 	if (mGame->getWindowSystem()->isKey(mKey, mState)) {
 		std::cout << "TestCommand execute!" << std::endl;
 	}
 }
+
+} // namespace engine

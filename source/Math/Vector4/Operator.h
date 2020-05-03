@@ -8,6 +8,51 @@
 
 namespace engine {
 
+template <typename T, typename U>
+Vector4<T>& operator+=(Vector4<T>& left, U right) {
+	left.x += right;
+	left.y += right;
+	left.z += right;
+	left.w += right;
+	return left;
+}
+
+template <typename T, typename U>
+Vector4<T>& operator-=(Vector4<T>& left, U right) {
+	left.x -= right;
+	left.y -= right;
+	left.z -= right;
+	left.w -= right;
+	return left;
+}
+
+template <typename T, typename U>
+Vector4<T>& operator*=(Vector4<T>& left, U right) {
+	left.x *= right;
+	left.y *= right;
+	left.z *= right;
+	left.w *= right;
+	return left;
+}
+
+template <typename T>
+Vector4<T>& operator+=(Vector4<T>& left, Vector4<T> const& right) {
+	left.x += right.x;
+	left.y += right.y;
+	left.z += right.z;
+	left.w += right.w;
+	return left;
+}
+
+template <typename T>
+Vector4<T>& operator-=(Vector4<T>& left, Vector4<T> const& right) {
+	left.x -= right.x;
+	left.y -= right.y;
+	left.z -= right.z;
+	left.w -= right.w;
+	return left;
+}
+
 template <typename T>
 Bool operator==(Vector4<T> const& left, Vector4<T> const& right) {
 	return left.x == right.x && left.y == right.y && left.z == right.z && left.w == right.w;

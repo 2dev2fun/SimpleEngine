@@ -2,7 +2,7 @@
 
 #include "System/Render/Backend/OpenGL/Shader/Mesh.h"
 
-using namespace engine;
+namespace engine {
 
 MeshShader::MeshShader()
 		: mWorldTransform(0xFFFFFFFF)
@@ -18,3 +18,5 @@ MeshShader::MeshShader()
 }
 
 MeshShader::~MeshShader() {}
+
+} // namespace engine

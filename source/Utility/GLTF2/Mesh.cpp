@@ -30,9 +30,9 @@ void Mesh::load(rj::Value& mesh) {
 
 		auto normalIt = attributes.FindMember("NORMAL");
 		if (normalIt != attributes.MemberEnd()) {
-			auto& position = positionIt->value;
-			ASSERT(position.IsUint());
-			mPrimitives[primitive].mAttribute.NORMAL = position.GetUint();
+			auto& normal = normalIt->value;
+			ASSERT(normal.IsUint());
+			mPrimitives[primitive].mAttribute.NORMAL = normal.GetUint();
 		}
 
 		auto tangentIt = attributes.FindMember("TANGENT");

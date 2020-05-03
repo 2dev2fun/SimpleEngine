@@ -7,7 +7,7 @@
 #include <sstream>
 #include <string>
 
-using namespace engine;
+namespace engine {
 
 Shader::Shader()
 		: mProgram(0xFFFFFFFF)
@@ -103,3 +103,5 @@ GLuint Shader::getAttribute(std::string const& name) {
 	if (location == 0xFFFFFFFF) { LOG_CRITICAL("Not found attribute location: {}", name); }
 	return location;
 }
+
+} // namespace engine

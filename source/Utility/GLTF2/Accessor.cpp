@@ -20,7 +20,7 @@ void Accessor::load(rj::Value& accessor) {
 	if (byteOffsetIt != accessor.MemberEnd()) {
 		auto& byteOffset = byteOffsetIt->value;
 		ASSERT(byteOffset.IsUint());
-		byteOffset = byteOffset.GetUint();
+		mByteOffset = byteOffset.GetUint();
 	}
 
 	auto componentTypeIt = accessor.FindMember("componentType");

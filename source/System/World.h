@@ -4,6 +4,7 @@
 
 #include "Component.h"
 #include "Component/Mesh.h"
+#include "Component/Move.h"
 #include "Component/Transform3D.h"
 #include "Engine.h"
 #include "Table.h"
@@ -23,18 +24,22 @@ public:
 	void removeEntity(Entity entity);
 
 	auto* createMeshComponent(Entity entity);
+	auto* createMoveComponent(Entity entity);
 	auto* createTransform3DComponent(Entity entity);
 
 	void removeMeshComponent(Entity entity);
+	void removeMoveComponent(Entity entity);
 	void removeTransform3DComponent(Entity entity);
 
 	auto* getMeshComponent(Entity entity);
+	auto* getMoveComponent(Entity entity);
 	auto* getTransform3DComponent(Entity entity);
 
 	Bool hasEntity(Entity entity) const;
 	Bool hasComponent(Entity entity, Mask mask) const;
 
 	auto getMeshTable();
+	auto getMoveTable();
 	auto getTransform3DTable();
 
 	void setPlayer(Entity entity);
@@ -44,6 +49,7 @@ public:
 	UInt32 getCapacity() const;
 private:
 	Index getMeshIndex(Entity entity) const;
+	Index getMoveIndex(Entity entity) const;
 	Index getTransform3DIndex(Entity entity) const;
 
 	void attachMask(Entity entity, Mask mask);
@@ -65,9 +71,11 @@ private:
 	std::vector<Mask> mMasks;
 
 	std::shared_ptr<Table<MeshComponent>>        mMeshTable;
+	std::shared_ptr<Table<MoveComponent>>        mMoveTable;
 	std::shared_ptr<Table<Transform3DComponent>> mTransform3DTable;
 
 	std::vector<Index> mMeshIndices;
+	std::vector<Index> mMoveIndices;
 	std::vector<Index> mTransform3DIndices;
 };
 
@@ -75,6 +83,12 @@ inline auto* WorldSystem::createMeshComponent(Entity entity) {
 	ASSERT(entity < mSize);
 	auto index = createComponent(mMeshTable.get(), mMeshIndices, entity, COMPONENT_MESH);
 	return mMeshTable->getComponent(index);
+}
+
+inline auto* WorldSystem::createMoveComponent(Entity entity) {
+	ASSERT(entity < mSize);
+	auto index = createComponent(mMoveTable.get(), mMoveIndices, entity, COMPONENT_MOVE);
+	return mMoveTable->getComponent(index);
 }
 
 inline auto* WorldSystem::createTransform3DComponent(Entity entity) {
@@ -88,6 +102,11 @@ inline void WorldSystem::removeMeshComponent(Entity entity) {
 	removeComponent(mMeshTable.get(), mMeshIndices, entity, COMPONENT_MESH);
 }
 
+inline void WorldSystem::removeMoveComponent(Entity entity) {
+	ASSERT(entity < mSize);
+	removeComponent(mMoveTable.get(), mMoveIndices, entity, COMPONENT_MOVE);
+}
+
 inline void WorldSystem::removeTransform3DComponent(Entity entity) {
 	ASSERT(entity < mSize);
 	removeComponent(mTransform3DTable.get(), mTransform3DIndices, entity, COMPONENT_TRANSFORM3D);
@@ -95,11 +114,19 @@ inline void WorldSystem::removeTransform3DComponent(Entity entity) {
 
 inline auto* WorldSystem::getMeshComponent(Entity entity) {
 	ASSERT(entity < mSize);
+	ASSERT(hasComponent(entity, COMPONENT_MESH));
 	return mMeshTable->getComponent(getMeshIndex(entity));
+}
+
+inline auto* WorldSystem::getMoveComponent(Entity entity) {
+	ASSERT(entity < mSize);
+	ASSERT(hasComponent(entity, COMPONENT_MOVE));
+	return mMoveTable->getComponent(getMoveIndex(entity));
 }
 
 inline auto* WorldSystem::getTransform3DComponent(Entity entity) {
 	ASSERT(entity < mSize);
+	ASSERT(hasComponent(entity, COMPONENT_TRANSFORM3D));
 	return mTransform3DTable->getComponent(getTransform3DIndex(entity));
 }
 
@@ -116,6 +143,11 @@ inline Index WorldSystem::getMeshIndex(Entity entity) const {
 	return mMeshIndices[entity];
 }
 
+inline Index WorldSystem::getMoveIndex(Entity entity) const {
+	ASSERT(entity < mSize);
+	return mMoveIndices[entity];
+}
+
 inline Index WorldSystem::getTransform3DIndex(Entity entity) const {
 	ASSERT(entity < mSize);
 	return mTransform3DIndices[entity];
@@ -123,6 +155,10 @@ inline Index WorldSystem::getTransform3DIndex(Entity entity) const {
 
 inline auto WorldSystem::getMeshTable() {
 	return mMeshTable;
+}
+
+inline auto WorldSystem::getMoveTable() {
+	return mMoveTable;
 }
 
 inline auto WorldSystem::getTransform3DTable() {
@@ -134,6 +170,7 @@ inline void WorldSystem::setPlayer(Entity entity) {
 }
 
 inline Entity WorldSystem::getPlayer() const {
+	ASSERT(hasEntity(mPlayer));
 	return mPlayer;
 }
 

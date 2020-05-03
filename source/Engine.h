@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Engine/Alias.h"
+#include "Engine/Constant.h"
 #include "Engine/Forward.h"
 #include "Engine/Logger.h"
 

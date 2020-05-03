@@ -2,7 +2,7 @@
 
 #include "System/Window.h"
 
-using namespace engine;
+namespace engine {
 
 WindowSystem::WindowSystem(Game* game, UInt32 width, UInt32 height)
 		: mGame(game)
@@ -73,7 +73,6 @@ void WindowSystem::update() {
 }
 
 Bool WindowSystem::isKey(Key key, State state) const {
-
 	switch (state) {
 		case STATE_HELD:     return isKeyHeld(key);
 		case STATE_PRESSED:  return isKeyPressed(key);
@@ -84,3 +83,17 @@ Bool WindowSystem::isKey(Key key, State state) const {
 
 	return false;
 }
+
+Bool WindowSystem::isMouseButton(Button button, State state) const {
+	switch (state) {
+		case STATE_HELD:     return isMouseButtonHeld(button);
+		case STATE_PRESSED:  return isMouseButtonPressed(button);
+		case STATE_RELEASED: return isMouseButtonReleased(button);
+
+		default: ASSERT(0);
+	}
+
+	return false;
+}
+
+} // namespace engine

@@ -7,7 +7,7 @@
 
 #include <cmath>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Quaternion Function", "[Quaternion Function]") {
 	Quaternion<Float32> a(1, 2, 3, 4);
@@ -46,3 +46,5 @@ TEST_CASE("Math Quaternion Function", "[Quaternion Function]") {
 		REQUIRE(res == ref);
 	}
 }
+
+} // namespace engine

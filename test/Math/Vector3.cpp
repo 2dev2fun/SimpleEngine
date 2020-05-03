@@ -5,7 +5,7 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Vector3", "[Vector3]") {
 	Vector3<Float32> a(1, 2, 3);
@@ -33,28 +33,6 @@ TEST_CASE("Math Vector3", "[Vector3]") {
 		REQUIRE(res.y == 3);
 		REQUIRE(res.z == 3);
 	}
-
-	SECTION("Vector3<T>& operator+=(U right)") {
-		auto res = a;
-		res += 3;
-		auto ref = b;
-
-		REQUIRE(res == ref);
-	}
-
-	SECTION("Vector3<T>& operator-=(U right)") {
-		auto res = b;
-		res -= 3;
-		auto ref = a;
-
-		REQUIRE(res == ref);
-	}
-
-	SECTION("Vector3<T>& operator*=(U right)") {
-		auto res = a;
-		res *= 2;
-		auto ref = Vector3<Float32>(2, 4, 6);
-
-		REQUIRE(res == ref);
-	}
 }
+
+} // namespace engine

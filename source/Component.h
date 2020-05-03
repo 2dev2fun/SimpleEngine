@@ -4,7 +4,7 @@
 
 namespace engine {
 
-enum Component {
+enum ComponentType {
 	COMPONENT_MESH        = 1 << 0,
 	COMPONENT_MOVE        = 1 << 1,
 	COMPONENT_TRANSFORM3D = 1 << 2,

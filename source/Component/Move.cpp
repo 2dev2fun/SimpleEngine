@@ -8,10 +8,10 @@ void MoveComponent::init() {
 	mAngularSpeed = 100.0f;
 	mAngularValue = 0.0f;
 
-	mForwardSpeed = 100.0f;
+	mForwardSpeed = 10.0f;
 	mForwardValue = 0.0f;
 
-	mStrafeSpeed = 100.0f;
+	mStrafeSpeed = 10.0f;
 	mStrafeValue = 0.0f;
 }
 

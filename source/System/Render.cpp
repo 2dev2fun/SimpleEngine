@@ -4,45 +4,69 @@
 #include "Component/Mesh.h"
 #include "Component/Transform3D.h"
 #include "Game.h"
+#include "Math.h"
 #include "System/Render.h"
+#include "System/Render/Camera/Follow.h"
+#include "System/Render/Camera/FPS.h"
+#include "System/Render/Camera/Orbit.h"
+#include "System/Render/Math.h"
 #include "System/Render/Technique/Mesh.h"
+#include "System/Window.h"
 #include "System/World.h"
 #include "Table.h"
 
+#include <glad/glad.h>
+
 #include <memory>
 
-using namespace engine;
+namespace engine {
 
-RenderSystem::RenderSystem(Game* game) : mGame(game) {
+RenderSystem::RenderSystem(Game* game) : mGame(game), mCameraType(CameraType::Follow) {
+	mCamera = std::make_unique<FollowCamera>(mGame);
+
 	mMeshTechnique = std::make_unique<MeshTechnique>(mGame);
+
+	auto windowSystem = mGame->getWindowSystem();
+	auto widht  = windowSystem->getWidth();
+	auto height = windowSystem->getHeight();
+
+	mProjection = math::perspective(math::toRadians(45.0f), widht, height, 0.1f, 1000.0f);
 }
 
 RenderSystem::~RenderSystem() {}
 
 void RenderSystem::update() {
+	mCamera->update();
+
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	mMeshTechnique->update();
-
-
-	//auto* worldSystem = mGame->getWorldSystem();
-
-	//auto meshTable        = worldSystem->getMeshTable();
-	//auto transform3DTable = worldSystem->getTransform3DTable();
-
-	//Mask mask = COMPONENT_MESH | COMPONENT_TRANSFORM3D;
-
-	//for (UInt32 index = 0; index < meshTable->getSize(); ++index) {
-		//auto entity = meshTable->getEntity(index);
-
-		//if (!worldSystem->hasComponent(entity, mask)) { continue; }
-
-		//auto* meshComponent = worldSystem->getMeshComponent(entity);
-		//auto d1M = meshComponent->getData1();
-		//auto d2M = meshComponent->getData2();
-
-		//auto* transform3DComponent = worldSystem->getTransform3DComponent(entity);
-		//auto d1T = transform3DComponent->getData1();
-		//auto d2T = transform3DComponent->getData2();
-
-		//std::cout << "RenderSystem: " << d1M << '\t' << d2M << '\t' << d1T << '\t' << d2T << std::endl;
-	//}
 }
+
+void RenderSystem::camera(CameraType type) {
+	if (mCameraType == type) { return; }
+
+	mCameraType = type;
+
+	switch (mCameraType) {
+		case CameraType::Follow:
+			mCamera = std::make_unique<FollowCamera>(mGame);
+			break;
+		case CameraType::FPS:
+			mCamera = std::make_unique<FPSCamera>(mGame);
+			break;
+		case CameraType::Orbit:
+			mCamera = std::make_unique<OrbitCamera>(mGame);
+			break;
+		default:
+			ASSERT(0);
+	}
+
+	mCamera->ideal();
+}
+
+} // namespace engine

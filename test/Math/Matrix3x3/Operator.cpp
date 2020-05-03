@@ -4,7 +4,7 @@
 
 #include <catch2/catch.hpp>
 
-using namespace engine;
+namespace engine {
 
 TEST_CASE("Math Matrix3x3 Operator", "[Matrix3x3 Operator]") {
 	Vector3<Float32> a(1, 2, 3);
@@ -80,3 +80,5 @@ TEST_CASE("Math Matrix3x3 Operator", "[Matrix3x3 Operator]") {
 		REQUIRE(res == ref);
 	}
 }
+
+} // namespace engine

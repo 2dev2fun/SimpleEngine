@@ -8,6 +8,46 @@
 
 namespace engine {
 
+template <typename T, typename U>
+Vector3<T>& operator+=(Vector3<T>& left, U right) {
+	left.x += right;
+	left.y += right;
+	left.z += right;
+	return left;
+}
+
+template <typename T, typename U>
+Vector3<T>& operator-=(Vector3<T>& left, U right) {
+	left.x -= right;
+	left.y -= right;
+	left.z -= right;
+	return left;
+}
+
+template <typename T, typename U>
+Vector3<T>& operator*=(Vector3<T>& left, U right) {
+	left.x *= right;
+	left.y *= right;
+	left.z *= right;
+	return left;
+}
+
+template <typename T>
+Vector3<T>& operator+=(Vector3<T>& left, Vector3<T> const& right) {
+	left.x += right.x;
+	left.y += right.y;
+	left.z += right.z;
+	return left;
+}
+
+template <typename T>
+Vector3<T>& operator-=(Vector3<T>& left, Vector3<T> const& right) {
+	left.x -= right.x;
+	left.y -= right.y;
+	left.z -= right.z;
+	return left;
+}
+
 template <typename T>
 Bool operator==(Vector3<T> const& left, Vector3<T> const& right) {
 	return left.x == right.x && left.y == right.y && left.z == right.z;

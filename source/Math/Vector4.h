@@ -16,15 +16,6 @@ public:
 	T& operator[](UInt32 index);
 	T const& operator[](UInt32 index) const;
 
-	template <typename U>
-	Vector4<T>& operator+=(U right);
-
-	template <typename U>
-	Vector4<T>& operator-=(U right);
-
-	template <typename U>
-	Vector4<T>& operator*=(U right);
-
 	T x;
 	T y;
 	T z;
@@ -48,36 +39,6 @@ T& Vector4<T>::operator[](UInt32 index) {
 template <typename T>
 T const& Vector4<T>::operator[](UInt32 index) const {
 	return *(&x + index);
-}
-
-template <typename T>
-template <typename U>
-Vector4<T>& Vector4<T>::operator+=(U right) {
-	x += right;
-	y += right;
-	z += right;
-	w += right;
-	return *this;
-}
-
-template <typename T>
-template <typename U>
-Vector4<T>& Vector4<T>::operator-=(U right) {
-	x -= right;
-	y -= right;
-	z -= right;
-	w -= right;
-	return *this;
-}
-
-template <typename T>
-template <typename U>
-Vector4<T>& Vector4<T>::operator*=(U right) {
-	x *= right;
-	y *= right;
-	z *= right;
-	w *= right;
-	return *this;
 }
 
 } // namespace engine

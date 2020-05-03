@@ -50,6 +50,13 @@ VertexArray::VertexArray(std::vector<Float32> const& positions, std::vector<UInt
 	setPositions(positions, positionsOffset);
 	setIndices(indices);
 
+	//for (auto i : positions) {
+		//LOG_INFO("{}", i);
+	//}
+
+	//LOG_INFO("{}", positions.size());
+	//LOG_INFO("Count: {}", indices.size());
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
